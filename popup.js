@@ -1,3 +1,73 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // Tab switching functionality with animations
+  const tabItems = document.querySelectorAll('.tab-item');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  tabItems.forEach(item => {
+    item.addEventListener('click', function() {
+      // Get the tab to show
+      const tabToShow = this.getAttribute('data-tab');
+      
+      // Remove active class from all tabs and contents
+      tabItems.forEach(tab => tab.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+      
+      // Add active class to clicked tab and corresponding content
+      this.classList.add('active');
+      document.getElementById(`${tabToShow}-content`).classList.add('active');
+    });
+  });
+  
+  // Theme toggle functionality with animation
+  const themeSwitch = document.getElementById('theme-switch');
+  const themeIcon = document.querySelector('.theme-toggle i');
+  const themeLabel = document.querySelector('.theme-toggle label');
+  
+  // Check if dark mode is saved in localStorage
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-theme');
+    themeSwitch.checked = true;
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+    themeLabel.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+  }
+  
+  themeSwitch.addEventListener('change', function() {
+    // Add transition class for smooth animation
+    document.body.classList.add('theme-transition');
+    
+    if (this.checked) {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('darkMode', 'true');
+      
+      // Animate icon change
+      themeIcon.style.transform = 'rotate(360deg)';
+      setTimeout(() => {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        themeLabel.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        themeIcon.style.transform = 'rotate(0)';
+      }, 250);
+    } else {
+      document.body.classList.remove('dark-theme');
+      localStorage.setItem('darkMode', 'false');
+      
+      // Animate icon change
+      themeIcon.style.transform = 'rotate(360deg)';
+      setTimeout(() => {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        themeLabel.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+        themeIcon.style.transform = 'rotate(0)';
+      }, 250);
+    }
+    
+    // Remove transition class after animation completes
+    setTimeout(() => {
+      document.body.classList.remove('theme-transition');
+    }, 500);
+  });
+});
 document.addEventListener('DOMContentLoaded', () => {
   // Tab Navigation
   const tabs = document.querySelectorAll('.tab-item');
@@ -559,37 +629,50 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Add this function to handle real-time updates from active YouTube sessions
-function setupActiveSessionUpdates() {
-  // Query for active YouTube tabs
-  chrome.tabs.query({ url: '*://*.youtube.com/*' }, (tabs) => {
-    // If there are active YouTube tabs, request updates
-    if (tabs.length > 0) {
-      // Send message to all active YouTube tabs to start sending updates
-      tabs.forEach(tab => {
-        chrome.tabs.sendMessage(tab.id, { action: 'startSendingUpdates' });
+// Add this error handling to your existing popup.js file
+document.addEventListener('DOMContentLoaded', function() {
+  // Establish connection with background script
+  function connectToBackground() {
+    try {
+      // Check if we can connect to the background script
+      chrome.runtime.sendMessage({ action: 'ping' }, function(response) {
+        if (chrome.runtime.lastError) {
+          console.log('Connection to background script failed, retrying in 1 second...');
+          setTimeout(connectToBackground, 1000);
+          return;
+        }
+        
+        if (response && response.status === 'ok') {
+          console.log('Connected to background script successfully');
+          // Once connected, load data and initialize UI
+          loadDataAndUpdateUI();
+        }
       });
-      
-      // Update the active session indicator
-      updateActiveSessionIndicator(tabs);
+    } catch (error) {
+      console.error('Error connecting to background script:', error);
+      // Show error message to user
+      showConnectionError();
     }
-  });
+  }
   
-  // Listen for updates from content scripts
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === 'updateTime' && message.currentTime) {
-      // Update the time display with the latest data
-      document.getElementById('time-today').textContent = formatTime(message.currentTime);
-      
-      // Update other related stats if available
-      if (message.shortsTime !== undefined) {
-        document.getElementById('shorts-time').textContent = formatTime(message.shortsTime);
-        document.getElementById('shorts-count').textContent = message.shortsCount || 0;
-      }
-      
-      // Update goal progress if applicable
-      updateGoalProgress();
-    }
-    return true;
-  });
-}
+  // Show connection error message
+  function showConnectionError() {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'connection-error';
+    errorDiv.innerHTML = `
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>Could not connect to extension background service.</p>
+      <button id="retry-connection">Retry Connection</button>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    document.getElementById('retry-connection').addEventListener('click', function() {
+      errorDiv.remove();
+      connectToBackground();
+    });
+  }
+  
+  // Start connection attempt
+  connectToBackground();
+});

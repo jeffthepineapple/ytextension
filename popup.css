@@ -669,3 +669,149 @@ body.dark-mode .filter-group select option {
   outline: 2px solid var(--primary-color);
   outline-offset: 1px;
 }
+
+/* Tab switching animations */
+.tab-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Remove the underline animation */
+.tab-item::after {
+  display: none;
+}
+
+/* New hover animation */
+.tab-item:hover {
+  background-color: rgba(67, 97, 238, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-item.active {
+  color: var(--primary-color);
+  background-color: rgba(67, 97, 238, 0.12);
+  font-weight: 600;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-theme .tab-item:hover {
+  background-color: rgba(72, 149, 239, 0.15);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .tab-item.active {
+  background-color: rgba(72, 149, 239, 0.2);
+}
+
+/* Tab content transitions */
+.tab-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none;
+}
+
+.tab-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}
+
+/* Theme toggle animation */
+.theme-toggle {
+  position: relative;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle label {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.theme-toggle i {
+  transition: transform 0.5s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover i {
+  transform: rotate(30deg);
+}
+
+/* Dark theme transition */
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-theme .header,
+body.dark-theme .tab-navigation,
+body.dark-theme .tab-content,
+body.dark-theme .stat-card {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Theme transition animation */
+.theme-transition * {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Add this to your popup.css file */
+.connection-error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--card-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.connection-error i {
+  font-size: 48px;
+  color: var(--danger-color);
+  margin-bottom: 16px;
+}
+
+.connection-error p {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.connection-error button {
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.connection-error button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
