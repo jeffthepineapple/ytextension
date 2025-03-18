@@ -1,0 +1,34 @@
+{
+  "name": "youtube-time-tracker",
+  "version": "1.0.0",
+  "description": "A browser extension that helps you monitor and manage your time spent on YouTube",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Building extension...\" && zip -r youtube-time-tracker.zip . -x '*.git*' -x 'node_modules/*'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/youtube-time-tracker.git"
+  },
+  "keywords": [
+    "youtube",
+    "time-tracker",
+    "productivity",
+    "chrome-extension",
+    "browser-extension"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/youtube-time-tracker/issues"
+  },
+  "homepage": "https://github.com/yourusername/youtube-time-tracker#readme",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "prettier": "^2.8.7"
+  },
+  "dependencies": {
+    "chart.js": "^4.2.1"
+  }
+}

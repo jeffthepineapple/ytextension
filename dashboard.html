@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Time Tracker - Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="lib/chart.js"></script>
+</head>
+<body class="dashboard">
+  <div class="dashboard-header">
+    <div class="header-title">
+      <i class="fas fa-clock"></i>
+      <h1>YouTube Time Tracker</h1>
+    </div>
+    <div class="dashboard-controls">
+      <select class="theme-selector" id="theme-selector">
+        <option value="default">Default Theme</option>
+        <option value="dark-theme">Dark Theme</option>
+        <option value="minimal-theme">Minimal Theme</option>
+      </select>
+      <select class="layout-selector" id="layout-selector">
+        <option value="default">Default Layout</option>
+        <option value="layout-compact">Compact Layout</option>
+        <option value="layout-spacious">Spacious Layout</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="time-range-selector">
+    <div class="time-range-option active" data-range="today">Today</div>
+    <div class="time-range-option" data-range="week">This Week</div>
+    <div class="time-range-option" data-range="month">This Month</div>
+    <div class="time-range-option" data-range="year">This Year</div>
+  </div>
+  
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="total-time">0:00:00</div>
+      <div class="stat-label">Total Watch Time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="avg-time">0:00:00</div>
+      <div class="stat-label">Average Daily</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="video-count">0</div>
+      <div class="stat-label">Videos Watched</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="channel-count">0</div>
+      <div class="stat-label">Channels Watched</div>
+    </div>
+  </div>
+  
+  <div class="widget">
+    <div class="widget-header">
+      <div class="widget-title">Watch Time Trend</div>
+    </div>
+    <div class="widget-content">
+      <div class="chart-container">
+        <canvas id="time-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="widget">
+    <div class="widget-header">
+      <div class="widget-title">Most Watched Channels</div>
+    </div>
+    <div class="widget-content">
+      <div id="channels-list">
+        <!-- Channel items will be inserted here -->
+      </div>
+    </div>
+  </div>
+  
+  <div class="widget">
+    <div class="widget-header">
+      <div class="widget-title">Recent Videos</div>
+    </div>
+    <div class="widget-content">
+      <div id="recent-videos">
+        <!-- Recent video items will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

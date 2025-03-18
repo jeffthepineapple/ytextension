@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Time Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="popup.css">
+  <script src="lib/chart.js"></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <input type="checkbox" id="theme-switch">
+    <label for="theme-switch"><i class="fas fa-moon"></i> Dark Mode</label>
+  </div>
+
+  <div class="header">
+    <div class="header-title">
+      <i class="fas fa-clock"></i>
+      <h1>YouTube Time Tracker</h1>
+    </div>
+    <div class="header-actions">
+      <i class="fas fa-cog" id="settings-btn" title="Settings"></i>
+    </div>
+  </div>
+
+  <div class="tab-navigation">
+    <div class="tab-item active" data-tab="stats">Current Stats</div>
+    <div class="tab-item" data-tab="history">Video History</div>
+    <div class="tab-item" data-tab="shorts">Shorts Data</div>
+    <div class="tab-item" data-tab="analytics">Analytics</div>
+  </div>
+  
+  <!-- Stats Tab Content -->
+  <div class="tab-content active" id="stats-content">
+    <div class="stats-container">
+      <div class="time-today" id="time-today">0:00:00</div>
+      <div class="time-label">Time spent on YouTube today</div>
+      <div class="chart-container">
+        <canvas id="daily-watch-chart"></canvas>
+      </div>
+      <div class="time-equivalents" id="time-equivalents">
+        <div class="equivalent-item">
+          <i class="fas fa-book"></i>
+          <span>You could have read <span id="pages-equivalent">0</span> pages</span>
+        </div>
+        <div class="equivalent-item">
+          <i class="fas fa-running"></i>
+          <span>You could have run <span id="miles-equivalent">0</span> miles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Tab Content -->
+  <!-- Check that your popup.html has this structure for the history tab -->
+  <div id="history-content" class="tab-content">
+    <!-- Replace the filter-controls section with this updated version -->
+    <div class="filter-controls">
+      <div class="filter-row">
+        <div class="filter-group">
+          <label for="history-date">Date Range</label>
+          <select id="history-date">
+            <!-- options -->
+          </select>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-group">
+          <label for="history-type">Content Type</label>
+          <select id="history-type">
+            <!-- options -->
+          </select>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-group">
+          <label for="history-category">Category</label>
+          <select id="history-category">
+            <!-- options -->
+          </select>
+        </div>
+      </div>
+      <div class="duration-row">
+        <div class="filter-group">
+          <label for="duration-min">Min Duration</label>
+          <input type="number" id="duration-min" placeholder="Min (s)">
+        </div>
+        <div class="filter-group">
+          <label for="duration-max">Max Duration</label>
+          <input type="number" id="duration-max" placeholder="Max (s)">
+        </div>
+      </div>
+      <button id="apply-filters">Apply Filters</button>
+    </div>
+    <div id="history-list" class="history-list">
+      <!-- History items will be added here dynamically -->
+    </div>
+  </div>
+    <div class="empty-state" id="empty-history" style="display: none;">
+      <i class="fas fa-history"></i>
+      <p>No YouTube history yet</p>
+    </div>
+  </div>
+
+  <!-- Shorts Tab Content -->
+  <div class="tab-content" id="shorts-content">
+    <div class="shorts-stats">
+      <div class="stat-card">
+        <div class="stat-value" id="shorts-time">0:00:00</div>
+        <div class="stat-label">Time on Shorts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="shorts-count">0</div>
+        <div class="stat-label">Shorts Watched</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="shorts-ratio">0%</div>
+        <div class="stat-label">Of Total Time</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Tab Content -->
+  <div class="tab-content" id="analytics-content">
+    <div class="analytics-stats">
+      <div class="stat-card">
+        <div class="stat-value" id="avg-daily">0:00:00</div>
+        <div class="stat-label">Average Daily Usage</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="longest-video">0:00:00</div>
+        <div class="stat-label">Longest Session</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="category-chart"></canvas>
+    </div>
+  </div>
+</body>
+</html>

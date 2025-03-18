@@ -1,0 +1,94 @@
+/* YouTube Time Tracker - Styles */
+
+.yt-time-tracker {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: rgba(33, 33, 33, 0.9);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  font-family: 'Roboto', Arial, sans-serif;
+  max-width: 300px;
+  width: auto;
+  overflow: hidden;
+}
+
+.yt-time-tracker.minimized {
+  width: auto;
+  height: 36px;
+  border-radius: 18px;
+  bottom: 20px;
+  opacity: 0.7;
+}
+
+.yt-time-tracker.minimized:hover {
+  opacity: 1;
+}
+
+.yt-time-tracker.minimized .tracker-content {
+  padding: 6px 12px;
+}
+
+.yt-time-tracker.minimized .time-label {
+  display: none;
+}
+
+.tracker-content {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+}
+
+.tracker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff0000;
+}
+
+.tracker-time {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.time-label {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.time-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tracker-toggle {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.tracker-toggle:hover {
+  opacity: 1;
+}
+
+/* Animation for new sessions */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.time-updated {
+  animation: pulse 0.5s ease;
+}
